@@ -19,6 +19,11 @@ const handleWarrior = (e, onWarriorAdded) => {
     return false;
   }
 
+  if (Number(strength) + Number(magic) + Number(speed) + Number(defense) + Number(resistance) > 15) {
+    helper.handleError('All stats must add to a max of 15!');
+    return false;
+  }
+
   helper.sendPost(e.target.action, { name, strength, speed, magic, resistance, defense }, onWarriorAdded);
   return false;
 };
@@ -34,14 +39,16 @@ const WarriorForm = (props) => {
     >
       <label htmlFor='name'>Name: </label>
       <input id='warriorName' type='text' name='name' placeholder='Warrior Name' />
+      <label htmlFor='strength'>Strength: </label>
+      <input id='warriorStrength' type='number' min='0' max='5' name='strength' />
       <label htmlFor='magic'>Magic: </label>
-      <input id='warriorMagic' type='number' min='0' name='magic' />
+      <input id='warriorMagic' type='number' min='0' max='5' name='magic' />
       <label htmlFor='speed'>Speed: </label>
-      <input id='warriorSpeed' type='number' min='0' name='speed' />
+      <input id='warriorSpeed' type='number' min='0' max='5' name='speed' />
       <label htmlFor='defense'>Defense: </label>
-      <input id='warriorDefense' type='number' min='0' name='defense' />
+      <input id='warriorDefense' type='number' min='0' max='5' name='defense' />
       <label htmlFor='resistance'>Resistance: </label>
-      <input id='warriorResistance' type='number' min='0' name='resistance' />
+      <input id='warriorResistance' type='number' min='0' max='5' name='resistance' />
       <input className='makeWarriorSubmit' type='submit' value='Make Warrior' />
     </form>
   );

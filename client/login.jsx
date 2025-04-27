@@ -1,6 +1,6 @@
 const helper = require('./helper.js');
 const React = require('react');
-const {createRoot} = require('react-dom/client');
+const { createRoot } = require('react-dom/client');
 
 const handleLogin = (e) => {
   e.preventDefault();
@@ -42,11 +42,11 @@ const handleSignup = (e) => {
 
 const LoginWindow = (props) => {
   return (
-    <form id='loginForm' 
-      name='loginForm' 
-      onSubmit={handleLogin} 
-      action='/login' 
-      method='POST' 
+    <form id='loginForm'
+      name='loginForm'
+      onSubmit={handleLogin}
+      action='/login'
+      method='POST'
       className='mainForm'
     >
       <label htmlFor='username'>Username: </label>
@@ -60,12 +60,12 @@ const LoginWindow = (props) => {
 
 const SignupWindow = (props) => {
   return (
-    <form id='signupForm' 
-    name='signupForm' 
-    onSubmit={handleSignup} 
-    action='/signup' 
-    method='POST' 
-    className='mainForm'
+    <form id='signupForm'
+      name='signupForm'
+      onSubmit={handleSignup}
+      action='/signup'
+      method='POST'
+      className='mainForm'
     >
       <label htmlFor='username'>Username: </label>
       <input id='user' type='text' name='username' placeholder='username' />
@@ -86,17 +86,17 @@ const init = () => {
 
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
-    root.render( <LoginWindow /> );
+    root.render(<LoginWindow />);
     return false;
   });
 
   signupButton.addEventListener('click', (e) => {
     e.preventDefault();
-    root.render( <SignupWindow /> );
+    root.render(<SignupWindow />);
     return false;
   });
 
-  root.render( <LoginWindow /> );
+  root.render(<LoginWindow />);
 };
 
 window.onload = init;

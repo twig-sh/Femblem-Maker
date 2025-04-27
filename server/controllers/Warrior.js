@@ -6,7 +6,7 @@ const makerPage = (req, res) => res.render('app');
 
 const makeWarrior = async (req, res) => {
   if (!req.body.name || !req.body.strength || !req.body.speed
-    || !req.body.magic || !req.body.res || !req.body.def) {
+    || !req.body.magic || !req.body.resistance || !req.body.defense) {
     return res.status(400).json({ error: 'All fields are required!' });
   }
 
@@ -15,8 +15,8 @@ const makeWarrior = async (req, res) => {
     strength: req.body.strength,
     speed: req.body.speed,
     magic: req.body.magic,
-    res: req.body.res,
-    def: req.body.def,
+    res: req.body.resistance,
+    def: req.body.defense,
     owner: req.session.account._id,
   };
 
