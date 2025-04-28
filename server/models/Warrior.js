@@ -11,6 +11,11 @@ const WarriorSchema = new mongoose.Schema({
     unique: true,
     set: setName,
   },
+  health: {
+    type: Number,
+    default: 20,
+    require: true,
+  },
   strength: {
     type: Number,
     min: 1,

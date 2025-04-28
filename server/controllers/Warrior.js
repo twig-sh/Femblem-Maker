@@ -52,25 +52,8 @@ const getWarriors = async (req, res) => {
   }
 };
 
-const deleteWarrior = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const warrior = await Warrior.findById(id);
-
-    await warrior.deleteOne();
-    return res.status(200);
-  } catch (e) {
-    console.log(e);
-    return res.status(500).json({
-      error: 'failed to delete warrior',
-    });
-  }
-};
-
 module.exports = {
   makerPage,
   makeWarrior,
   getWarriors,
-  deleteWarrior,
 };

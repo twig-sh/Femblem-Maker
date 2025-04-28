@@ -77,7 +77,7 @@ const WarriorList = (props) => {
   const warriorNodes = warriors.map(warrior => {
     return (
       <div key={warrior._id} data-id={warrior._id} className='warrior'>
-        <img src='/assets/img/warriorface.jpeg' alt='warrior sprite' className='warriorSprite' />
+        <img src='/assets/img/warrior.png' alt='warrior sprite' className='warriorSprite' />
         <h3 className='warriorName'>Name: {warrior.name}</h3>
         <h3 className='warriorStrength'>Strength: {warrior.strength}</h3>
         <h3 className='warriorMagic'>Magic: {warrior.magic}</h3>
