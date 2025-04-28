@@ -56,6 +56,7 @@ const WarriorForm = (props) => {
 
 const WarriorList = (props) => {
   const [warriors, setWarriors] = useState(props.warriors);
+  const [selectedWarriors, setSelectedWarriors] = useState([]);
 
   useEffect(() => {
     const loadWarriorsFromServer = async () => {
@@ -74,9 +75,21 @@ const WarriorList = (props) => {
     );
   }
 
+
   const warriorNodes = warriors.map(warrior => {
     return (
-      <div key={warrior._id} data-id={warrior._id} className='warrior'>
+      <div key={warrior._id} data-id={warrior._id} className='warrior' onClick={() => {
+        if (selectedWarriors.length === 2) {
+          helper.handleError('Only two warriors can be selected!')
+          return false
+        }
+        setSelectedWarriors(
+          [
+            ...selectedWarriors,
+            warrior
+          ]
+        );
+      }}>
         <img src='/assets/img/warrior.png' alt='warrior sprite' className='warriorSprite' />
         <h3 className='warriorName'>Name: {warrior.name}</h3>
         <h3 className='warriorStrength'>Strength: {warrior.strength}</h3>
@@ -88,10 +101,42 @@ const WarriorList = (props) => {
     );
   });
 
+  const selectedWarriorNodes = selectedWarriors.map(warrior => {
+    return (
+      <div key={warrior._id} data-id={warrior._id} className='warrior'>
+        <img src='/assets/img/warrior.png' alt='warrior sprite' className='warriorSprite' />
+        <h3 className='warriorName'>Name: {warrior.name}</h3>
+        <h3 className='warriorStrength'>Strength: {warrior.strength}</h3>
+        <h3 className='warriorMagic'>Magic: {warrior.magic}</h3>
+        <h3 className='warriorSpeed'>Speed: {warrior.speed}</h3>
+        <h3 className='warriorResistance'>Resistance: {warrior.res}</h3>
+        <h3 className='warriorDefense'>Defense: {warrior.def}</h3>
+      </div>
+    )
+  });
+
   return (
-    <div className='warriorList'>
-      {warriorNodes}
-    </div>
+    <section className='warriorLists'>
+      <div className='selectedWarriorList'>
+        <h2>Selected Warriors</h2>
+        {selectedWarriorNodes}
+      </div>
+      <div>
+        <button onClick={() => {
+          if (selectedWarriors.length < 2) {
+            helper.handleError('Battles require two warriors!');
+            return false;
+          }
+        }}>
+          Battle!
+        </button>
+      </div>
+      <hr />
+      <div className='warriorList'>
+        <h2>All Warriors</h2>
+        {warriorNodes}
+      </div>
+    </section>
   );
 };
 
