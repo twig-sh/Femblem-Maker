@@ -3,6 +3,9 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
+let selectedIds = {};
+let selectedCount = 0;
+
 const handleWarrior = (e, onWarriorAdded) => {
   e.preventDefault();
   helper.hideError();
@@ -27,6 +30,20 @@ const handleWarrior = (e, onWarriorAdded) => {
   helper.sendPost(e.target.action, { name, strength, speed, magic, resistance, defense }, onWarriorAdded);
   return false;
 };
+
+const handleBattleTransition = async (e) => {
+  e.preventDefault();
+
+  let url = `/battle?firstwarrior=${selectedIds[0]}&secondwarrior=${selectedIds[1]}`;
+
+  let response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application.json',
+    }
+  });
+
+}
 
 const WarriorForm = (props) => {
   return (
@@ -89,6 +106,15 @@ const WarriorList = (props) => {
             warrior
           ]
         );
+
+        selectedIds[selectedCount] = warrior._id;
+        console.log(selectedIds[0]);
+
+        selectedCount++;
+
+        console.log(selectedIds);
+        console.log(selectedCount);
+
       }}>
         <img src='/assets/img/warrior.png' alt='warrior sprite' className='warriorSprite' />
         <h3 className='warriorName'>Name: {warrior.name}</h3>
@@ -122,14 +148,15 @@ const WarriorList = (props) => {
         {selectedWarriorNodes}
       </div>
       <div>
-        <button onClick={() => {
-          if (selectedWarriors.length < 2) {
-            helper.handleError('Battles require two warriors!');
-            return false;
-          }
-        }}>
-          Battle!
-        </button>
+        <form id='battleForm'
+          name='battleForm'
+          action='/battle'
+          onClick={handleBattleTransition}
+          method='get'
+          className='battleForm'
+        >
+          <input type="submit" value="Battle!" />
+        </form>
       </div>
       <hr />
       <div className='warriorList'>

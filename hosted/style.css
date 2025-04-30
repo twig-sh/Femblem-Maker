@@ -8,7 +8,7 @@ html, body {
 
 #logo {
     height: 40px;
-    width: 40;
+    width: 65px;
     padding-top: 5px;
     float:left;
     border-radius: 8px;
@@ -17,7 +17,7 @@ html, body {
 nav {
     width: 100%;
     height: 50px;
-    background-color: #55acee;
+    background-color: #ee5555;
 }
 
 nav:nth-child(1) {
@@ -35,32 +35,36 @@ nav:nth-child(1) {
 
 .navlink a, .navlink a:link, .navlink a:visited, .navlink a:hover, .navlink a:active {
     color: white;
-    text-decoration: none;
+    text-decoration: underline;
     padding: 5px;
-    border-radius: 4px;
-    background-color: #55acee;
+    background-color: #55acee00;
     transition: background-color 0.4s ease;
 }
 
 .navlink a:hover {
     transition: background-color 0.8s ease;
-    background-color: #66bdff;
+    background-color: #ee5555;
+}
+
+#title {
+  text-align: center;
+  padding-top: 50px;
 }
 
 .warriorForm {
-    border: 2px solid #338acc;
-    height: 35px;
-    width: 900px;
+    border: 2px solid #ff4a56;
+    height: 80px;
+    width: 650px;
     margin-top:0px;
     padding-top:10px;
-    background-color: #55acee;
+    background-color: #ee5555;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
 }
 
 .warriorForm label {
     display: inline-block;
-    width: 60px;
+    width: 90px;
     margin-left: 10px;
     font-size: 1.2em;
     color: white;
@@ -73,10 +77,11 @@ nav:nth-child(1) {
     transition: background-color 0.4s ease;
     display: inline;
     width: 90px;
-    background-color: #55acee;
+    background-color: #ee5555;
     border-radius: 2px;
     color: white;
     text-decoration: none;
+    margin-left: 10px;
 }
 
 .makeWarriorSubmit:link, .makeWarriorSubmit:visited, .makeWarriorSubmit:hover, .makeWarriorSubmit:active {
@@ -85,14 +90,14 @@ nav:nth-child(1) {
 
 .makeWarriorSubmit:hover {
     transition: background-color 0.4s ease;
-    background-color: #338acc;
+    background-color: #ff4a56;
 }
 
 .mainForm {
     height: 300px;
     width: 350px;
     margin: 0 auto;
-    padding-top: 350px;
+    padding-top: 50px;
     font-size: 1.2em;
 }
 
@@ -116,9 +121,9 @@ nav:nth-child(1) {
     margin-top: 14px;
     font-size: 1.2em;
     width: 100px;
-    background-color: #55acee;
+    background-color: #ee5555;
     border-radius: 2px;
-    border-color: #66acee;
+    border-color: #ff4a56;
     padding: 3px 0px;
     color: white;
     text-decoration: none;
@@ -130,7 +135,7 @@ nav:nth-child(1) {
 
 .formSubmit:hover {
     transition: background-color 0.4s ease;
-    background-color: #338acc;
+    background-color: #ee5555;
 }
 
 #user, #pass, #pass2 {
@@ -142,7 +147,7 @@ nav:nth-child(1) {
 
 #user:focus, #pass:focus, #pass2:focus {
     outline: none;
-    box-shadow: 0px 0px 1px 1px #55acee;
+    box-shadow: 0px 0px 1px 1px #ee5555;
 }
 
 .hidden {
@@ -181,19 +186,18 @@ nav:nth-child(1) {
 
 #warrior {
     z-index: 225;
-    margin-top: -20px;
-    margin-left: 135px;
+    margin-top: -110px;
     height: 450px;
-    width: 300px;
+    width: 550px;
     -ms-transform: rotate(330deg);
     -webkit-transform: rotate(330deg); 
     transform: rotate(330deg);
 }
 
 #warriors {
-    width: 40%;
+    width: 48%;
     min-width: 400px;
-    border: 2px solid #55acee;
+    border: 2px solid #ee5555;
     border-radius: 4px;
     margin: 0 auto;
     margin-top: 100px;
@@ -204,9 +208,9 @@ nav:nth-child(1) {
     margin: 0 auto;
     margin-top: 2px;
     margin-bottom: 2px;
-    border: 2px solid #55acee;
+    border: 2px solid #ee5555;
     border-radius: 4px;
-    background-color: #55acee;
+    background-color: #ee5555;
     padding: 10px;
     min-height:60px;
     overflow: hidden;
@@ -216,7 +220,7 @@ nav:nth-child(1) {
     transition: border-color 0.2s ease-out;
     border-color: rgba(255,255,255, 0.8);
     transition: background-color 2.6s ease-out;
-    background-color: #66bfff;
+    background-color: #f76868;
 }
 
 img.warriorSprite {
@@ -239,26 +243,55 @@ h3.emptyWarrior {
 
 h3.warriorName {
     float:left;
-    width: 200px;
+    width: 350px;
     font-weight: bold;
     padding-left: 65px;
-    font-size: 1.5em;
+    font-size: 1.8em;
 }
 
-h3.warriorAge {
+h3.warriorStrength {
     float: left;
     text-align: left;
-    width: 100px;
+    width: 120px;
     font-weight: bold;
-    padding-right: 40px;
-    font-size: 1.5em;
+    padding-right: 20px;
+    font-size: 1.4em;
 }
 
-h3.warriorLevel {
-    float:right;
-    width: 200px;
-    font-weight: bold;
-    font-size: 1.5em;
+h3.warriorMagic {
+  float: left;
+  text-align: left;
+  width: 100px;
+  font-weight: bold;
+  padding-right: 20px;
+  font-size: 1.4em;
+}
+
+h3.warriorSpeed {
+  float: left;
+  text-align: left;
+  width: 100px;
+  font-weight: bold;
+  padding-right: 20px;
+  font-size: 1.4em;
+}
+
+h3.warriorResistance {
+  float: left;
+  text-align: left;
+  width: 130px;
+  font-weight: bold;
+  padding-right: 20px;
+  font-size: 1.4em;
+}
+
+h3.warriorDefense {
+  float: left;
+  text-align: left;
+  width: 100px;
+  font-weight: bold;
+  padding-right: 20px;
+  font-size: 1.4em;
 }
 
 .warrior:first-child {
@@ -267,4 +300,9 @@ h3.warriorLevel {
 
 .warrior:last-child {
     margin-bottom:10px;
+}
+
+.warriorLists h2 {
+  text-align: center;
+  width: 25rem;
 }
