@@ -2,17 +2,20 @@ const helper = require('./helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
-import { selectedIds } from './maker.jsx';
 
 const BattleInterface = (props) => {
-  console.log(selectedIds);
+  // get the warrior ids from handlebars DOM elements
+  const warriorOneId = document.querySelector('#warriorOne').dataset.id;
+  const warriorTwoId = document.querySelector('#warriorTwo').dataset.id;
 
-  const [warriorOne, setWarriorOne] = useState({});
-  const [warriorTwo, setWarriorTwo] = useState({});
+  // create states to dynamically update warriors and their health
+  const [warriorOne, setWarriorOne] = useState([{ name: 'placeholder' }]);
+  const [warriorTwo, setWarriorTwo] = useState([{ name: 'placeholder' }]);
 
   const [warriorOneHealth, setWarriorOneHealth] = useState(20);
   const [warriorTwoHealth, setWarriorTwoHealth] = useState(20);
 
+  // load in the warriors
   useEffect(() => {
     const loadWarriorFromServer = async (id, setWarrior, setWarriorHealth) => {
       const response = await fetch(`/getWarriorById?id=${id}`);
@@ -22,12 +25,13 @@ const BattleInterface = (props) => {
       setWarriorHealth([data.health]);
 
     };
-    loadWarriorFromServer(selectedIds[0], setWarriorOne, setWarriorOneHealth);
-    loadWarriorFromServer(selectedIds[1], setWarriorTwo, setWarriorTwoHealth);
+    loadWarriorFromServer(warriorOneId, setWarriorOne, setWarriorOneHealth);
+    loadWarriorFromServer(warriorTwoId, setWarriorTwo, setWarriorTwoHealth);
   }, [props.reloadWarriors]);
 
+  let warriorTurn = 0;
+
   const battleLogic = (aggressor, defender) => {
-    console.log(aggressor.strength);
     let damage;
     let mult = 1;
 
@@ -60,24 +64,22 @@ const BattleInterface = (props) => {
     return damage;
   }
 
-  return (
-    <>
-      <h1 id='battleTitle' className='battleTitle'>Battle!</h1>
+  // calculate the damage taken after battle calculations and then set it
+  // to the next warrior's turn
+  const warriorOneAttack = () => {
+    if (warriorTurn != 2) {
+      const warriorOneAttackButton = document.querySelector('#warriorOneAttack')
+      const warriorTwoAttackButton = document.querySelector('#warriorTwoAttack');
+      const battleTitle = document.querySelector('#battleTitle');
+      const battleUI = document.querySelector('#battleUI');
 
-      <section id='battleUI'>
-        <h2>{warriorOneHealth}</h2>
-        {/* warrior one attack logic */}
-        <button onClick={() => {
-          const battleTitle = document.querySelector('#battleTitle');
-          const battleUI = document.querySelector('#battleUI');
+      const damage = battleLogic(warriorOne[0], warriorTwo[0]);
 
-          const damage = battleLogic(warriorOne[0], warriorTwo[0]);
+      setWarriorTwoHealth(warriorTwoHealth - damage);
 
-          setWarriorTwoHealth(warriorTwoHealth - damage);
-
-          if (warriorTwoHealth - damage <= 0) {
-            battleTitle.innerHTML = `${warriorOne[0].name} Wins!`
-            battleUI.innerHTML = `<form id='battleForm'
+      if (warriorTwoHealth - damage <= 0) {
+        battleTitle.innerHTML = `${warriorOne[0].name} Wins!`
+        battleUI.innerHTML = `<form id='battleForm'
             name='returnForm'
             action='/maker'
             method='Get'
@@ -85,21 +87,30 @@ const BattleInterface = (props) => {
           >
             <input type="submit" value="Return" />
           </form>`;
-          }
-        }}
-        >Attack</button >
-        <h2>{warriorTwoHealth}</h2>
-        <button onClick={() => {
-          const battleTitle = document.querySelector('#battleTitle');
-          const battleUI = document.querySelector('#battleUI');
+      }
 
-          const damage = battleLogic(warriorOne[0], warriorTwo[0]);
+      warriorTwoAttackButton.innerHTML = 'Attack'
+      warriorOneAttackButton.innerHTML = ''
+      warriorTurn = 2;
+    }
+  }
 
-          setWarriorOneHealth(warriorOneHealth - damage);
+  // calculate the damage taken after battle calculations and then set it
+  // to the next warrior's turn
+  const warriorTwoAttack = () => {
+    if (warriorTurn != 1) {
+      const warriorOneAttackButton = document.querySelector('#warriorOneAttack')
+      const warriorTwoAttackButton = document.querySelector('#warriorTwoAttack');
+      const battleTitle = document.querySelector('#battleTitle');
+      const battleUI = document.querySelector('#battleUI');
 
-          if (warriorOneHealth - damage <= 0) {
-            battleTitle.innerHTML = `${warriorTwo[0].name} Wins!`
-            battleUI.innerHTML = `<form id='returnForm'
+      const damage = battleLogic(warriorOne[0], warriorTwo[0]);
+
+      setWarriorOneHealth(warriorOneHealth - damage);
+
+      if (warriorOneHealth - damage <= 0) {
+        battleTitle.innerHTML = `${warriorTwo[0].name} Wins!`
+        battleUI.innerHTML = `<form id='returnForm'
             name='returnForm'
             action='/maker'
             method='Get'
@@ -107,8 +118,28 @@ const BattleInterface = (props) => {
           >
             <input type="submit" value="Return" />
           </form>`
-          }
-        }}
+      }
+
+      warriorOneAttackButton.innerHTML = 'Attack';
+      warriorTwoAttackButton.innerHTML = ''
+      warriorTurn = 1;
+    }
+  }
+
+  return (
+    <>
+      <h1 id='battleTitle' className='battleTitle'>Battle!</h1>
+
+      <section id='battleUI'>
+        <h1>{warriorOne[0].name}</h1>
+        <h2>Health: {warriorOneHealth}</h2>
+        {/* warrior one attack logic */}
+        <button id="warriorOneAttack" onClick={warriorOneAttack}
+        >Attack</button >
+
+        <h1>{warriorTwo[0].name}</h1>
+        <h2>Health: {warriorTwoHealth}</h2>
+        <button id="warriorTwoAttack" onClick={warriorTwoAttack}
         >Attack</button >
       </section >
     </>

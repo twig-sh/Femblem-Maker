@@ -3,9 +3,9 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-let selectedIds = {};
-let selectedCount = 0;
+let selectedIds = [];
 
+// handle creation of warriors using the on page form
 const handleWarrior = (e, onWarriorAdded) => {
   e.preventDefault();
   helper.hideError();
@@ -31,18 +31,21 @@ const handleWarrior = (e, onWarriorAdded) => {
   return false;
 };
 
+// check that two warriors are selected, the send a post to send their
+// ids to the battle screen
 const handleBattleTransition = async (e) => {
   e.preventDefault();
 
-  let url = `/battle?firstwarrior=${selectedIds[0]}&secondwarrior=${selectedIds[1]}`;
+  if (selectedIds.length === 2) {
+    const warriorOne = selectedIds[0];
+    const warriorTwo = selectedIds[1];
 
-  let response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application.json',
-    }
-  });
-
+    helper.sendPost('/battle', { warriorOne, warriorTwo });
+  }
+  else {
+    helper.handleError('Two warriors must be selected for battle!');
+  }
+  return false;
 }
 
 const WarriorForm = (props) => {
@@ -71,6 +74,7 @@ const WarriorForm = (props) => {
   );
 };
 
+// handle creation and selection of warriors
 const WarriorList = (props) => {
   const [warriors, setWarriors] = useState(props.warriors);
   const [selectedWarriors, setSelectedWarriors] = useState([]);
@@ -107,14 +111,7 @@ const WarriorList = (props) => {
           ]
         );
 
-        selectedIds[selectedCount] = warrior._id;
-        console.log(selectedIds[0]);
-
-        selectedCount++;
-
-        console.log(selectedIds);
-        console.log(selectedCount);
-
+        selectedIds.push(warrior._id);
       }}>
         <img src='/assets/img/warrior.png' alt='warrior sprite' className='warriorSprite' />
         <h3 className='warriorName'>Name: {warrior.name}</h3>

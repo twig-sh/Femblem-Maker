@@ -1,3 +1,4 @@
+// this code is altered from DomoMaker
 const models = require('../models');
 
 const { Warrior } = models;

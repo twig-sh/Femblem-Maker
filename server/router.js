@@ -16,6 +16,7 @@ const router = (app) => {
   app.post('/maker', mid.requiresLogin, controllers.Warrior.makeWarrior);
 
   app.get('/battle', mid.requiresLogin, controllers.Battle.battlePage);
+  app.post('/battle', mid.requiresLogin, controllers.Battle.battlePageTransition);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
